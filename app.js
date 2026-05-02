@@ -7,6 +7,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+const authRoutes = require('./src/routes/authRoutes');
+
+app.use('/api/v1/auth', authRoutes);
+
 // Ruta de prueba
 app.get('/', (req, res) => {
   res.send('API funcionando 🚀');
