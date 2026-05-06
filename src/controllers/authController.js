@@ -31,7 +31,8 @@ const register = async (req, res) => {
       message: 'Usuario registrado correctamente',
       user: {
         id: newUser._id,
-        email: newUser.email
+        email: newUser.email,
+        role: newUser.role
       }
     });
   } catch (error) {
@@ -95,7 +96,16 @@ const login = async (req, res) => {
   }
 };
 
+const logout = (req, res) => {
+  res.clearCookie('authToken');
+
+  res.status(200).json({
+    message: 'Logout exitoso'
+  });
+};
+
 module.exports = {
   register,
-  login
+  login,
+  logout
 };
