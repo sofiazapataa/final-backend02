@@ -18,4 +18,11 @@ router.get('/admin', authMiddleware, roleMiddleware('admin'), (req, res) => {
   });
 });
 
+router.get('/session', (req, res) => {
+  res.status(200).json({
+    message: 'Sesión actual',
+    session: req.session
+  });
+});
+
 module.exports = router;
