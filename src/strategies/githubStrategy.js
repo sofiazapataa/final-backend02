@@ -18,8 +18,7 @@ passport.use(
             first_name: profile.displayName || profile.username || 'GitHub',
             last_name: 'User',
             email: profile.emails?.[0]?.value || `${profile.username}@github.com`,
-            githubId: profile.id,
-            password: ''
+            githubId: profile.id
           });
         }
 

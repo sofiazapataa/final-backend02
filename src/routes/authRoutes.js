@@ -11,10 +11,26 @@ const {
 } = require('../controllers/authController');
 
 router.post('/register', register);
-router.post('/login', login);
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', { session: false }, (error, user, info) => {
+    if (error) {
+      return next(error);
+    }
+
+    if (!user) {
+      return res.status(401).json({
+        message: info?.message || 'Credenciales inválidas'
+      });
+    }
+
+    req.user = user;
+    next();
+  })(req, res, next);
+}, login);
+
 router.post('/logout', logout);
 
-// Iniciar login con GitHub
 router.get(
   '/github',
   passport.authenticate('github', {
@@ -22,7 +38,6 @@ router.get(
   })
 );
 
-// Callback de GitHub
 router.get(
   '/github/callback',
   passport.authenticate('github', {
